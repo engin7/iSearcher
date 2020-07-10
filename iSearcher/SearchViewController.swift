@@ -31,23 +31,68 @@ class SearchViewController: UIViewController {
                                     TableView.CellIdentifiers.searchResultCell)
         searchBar.becomeFirstResponder()
     }
+    
+    // MARK:- Helper Methods
+    
+    func iTunesURL(searchText: String) -> URL {
+      let encodedText = searchText.addingPercentEncoding(
+        withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+      let urlString = String(format:
+          "https://itunes.apple.com/search?term=%@", encodedText)
+      let url = URL(string: urlString)
+      return url!
+    }
+    
+    func performStoreRequest(with url: URL) -> Data? {
+      do {
+        return try Data(contentsOf:url)
+      } catch {
+       print("Download Error: \(error.localizedDescription)")
+         if let jsonString = performStoreRequest(with: url) {
+          print("Received JSON string '\(jsonString)'")
+        }
+        showNetworkError()
+    return nil
+    } }
+    
+    func parse(data: Data) -> [SearchResult] {
+      do {
+        let decoder = JSONDecoder()
+        let result = try decoder.decode(ResultArray.self, from:data)
+        return result.results
+      } catch {
+        print("JSON Error: \(error)")
+    return [] }
+    }
+    
+    func showNetworkError() {
+      let alert = UIAlertController(title: "Sorry",
+        message: "error accessing the iTunes Store." +
+        " Try again.", preferredStyle: .alert)
+      let action = UIAlertAction(title: "OK", style: .default,
+                             handler: nil)
+    present(alert, animated: true, completion: nil)
+      alert.addAction(action)
+    }
+    
 }
 
 extension SearchViewController: UISearchBarDelegate {
-  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.resignFirstResponder()
-    searchResults = []
-    if searchBar.text! != "Boom" {
-    for i in 0...99 {
-      let searchResult = SearchResult()
-      searchResult.itemName = String(format: "Mock Result %d ", i)
-      searchResult.artistName = searchBar.text!
-      searchResults.append(searchResult)
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+      if !searchBar.text!.isEmpty {
+        searchBar.resignFirstResponder()
+        hasSearched = true
+        searchResults = []
+        let url = iTunesURL(searchText: searchBar.text!)
+        print("URL: '\(url)'")
+        if let data = performStoreRequest(with: url) {
+        searchResults = parse(data: data)
+        }
+        tableView.reloadData()
+      }
     }
-   }
-    hasSearched = true
-    tableView.reloadData()
-    }
+    
     
  func position(for bar: UIBarPositioning) -> UIBarPosition {
   return .topAttached
@@ -78,8 +123,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     } else {
       let searchResult = searchResults[indexPath.row]
       cell.itemLabel.text = searchResult.itemName
-      cell.artistNameLabel.text = searchResult.artistName
-    }
+      if searchResult.artist.isEmpty {
+        cell.artistNameLabel.text = "Unknown"
+      } else {
+        cell.artistNameLabel.text = String(format: "%@ (%@)",
+      searchResult.artist, searchResult.type)
+     }
+        }
       return cell
   }
     
