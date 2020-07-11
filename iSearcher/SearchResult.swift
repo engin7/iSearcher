@@ -29,6 +29,7 @@ class SearchResult:Codable, CustomStringConvertible {
     var trackPrice: Double? = 0.0
     var currency = ""
     var image = ""
+    var imageL = ""
     var trackViewUrl: String?
     var collectionName: String?
     var collectionViewUrl: String?
@@ -74,7 +75,8 @@ class SearchResult:Codable, CustomStringConvertible {
     }
     
     enum CodingKeys: String, CodingKey {
-      case image = "artworkUrl100"
+      case image = "artworkUrl60"
+      case imageL = "artworkUrl100"
       case itemGenre = "primaryGenreName"
       case bookGenre = "genres"
       case itemPrice = "price"

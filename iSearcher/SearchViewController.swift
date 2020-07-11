@@ -40,6 +40,17 @@ class SearchViewController: UIViewController {
         searchBar.becomeFirstResponder()
     }
     
+    // MARK:- Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      if segue.identifier == "Detail" {
+        let nav = segue.destination as! UINavigationController
+        let dvc = nav.topViewController as! DetailViewController
+        let indexPath = sender as! IndexPath
+        let searchResult = searchResults[indexPath.row]
+        dvc.searchResult = searchResult
+      }
+    }
+    
     // MARK:- Helper Methods
     
     func iTunesURL(searchText: String) -> URL {
@@ -159,7 +170,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
          didSelectRowAt indexPath: IndexPath) {
-      tableView.deselectRow(at: indexPath, animated: true)
+         tableView.deselectRow(at: indexPath, animated: true)
+         performSegue(withIdentifier: "Detail", sender: indexPath)
+        
     }
     
     func tableView(_ tableView: UITableView,
