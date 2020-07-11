@@ -138,8 +138,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,
         cellForRowAt indexPath: IndexPath) -> UITableViewCell {
    
-     let cell = tableView.dequeueReusableCell(
-                   withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
     if isLoading {
       let cell = tableView.dequeueReusableCell(withIdentifier:
           TableView.CellIdentifiers.loadingCell, for: indexPath)
@@ -147,20 +145,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
       spinner.startAnimating()
       return cell
     } else if searchResults.count == 0 {
+      let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
       cell.itemLabel.text = "Sorry, nothing found"
       cell.artistNameLabel.text = "Empty"
-    } else {
-      let searchResult = searchResults[indexPath.row]
-      cell.itemLabel.text = searchResult.itemName
-      if searchResult.artist.isEmpty {
-        cell.artistNameLabel.text = "Unknown"
-      } else {
-        cell.artistNameLabel.text = String(format: "%@ (%@)",
-      searchResult.artist, searchResult.type)
-     }
-        }
       return cell
-  }
+    } else {
+      let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
+      let searchResult = searchResults[indexPath.row]
+      cell.configure(for: searchResult)
+      return cell
+    }
+   }
     
     func tableView(_ tableView: UITableView,
          didSelectRowAt indexPath: IndexPath) {

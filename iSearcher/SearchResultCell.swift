@@ -13,16 +13,41 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var artworkImageView: UIImageView!
+    var downloadTask: URLSessionDownloadTask?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    override func prepareForReuse() {
+         super.prepareForReuse()
+         downloadTask?.cancel()
+         downloadTask = nil
+       }
+     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
+    
+     // MARK:- Public Methods
+    func configure(for result: SearchResult) {
+        itemLabel.text = result.itemName
+        if result.artist.isEmpty {
+          artistNameLabel.text = "Unknown"
+        } else {
+          artistNameLabel.text = String(format: "%@ (%@)",
+                            result.artist, result.type)
+        }
+        
+        artworkImageView.image = UIImage(named: "Placeholder")
+        if let imageURL = URL(string: result.image) {
+          downloadTask = artworkImageView.loadImage(url: imageURL)
+        }
+        
+    }
+   
 }

@@ -17,6 +17,7 @@
 		100491E124B7A53900EC5AB3 /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100491E024B7A53900EC5AB3 /* SearchResultCell.xib */; };
 		100491E324B7AE7700EC5AB3 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491E224B7AE7700EC5AB3 /* SearchResultCell.swift */; };
 		100491E524B9298D00EC5AB3 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100491E424B9298D00EC5AB3 /* LoadingCell.xib */; };
+		100491E724BA014C00EC5AB3 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		100491E024B7A53900EC5AB3 /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		100491E224B7AE7700EC5AB3 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		100491E424B9298D00EC5AB3 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,9 +90,10 @@
 				100491BC24B652D900EC5AB3 /* AppDelegate.swift */,
 				100491BE24B652D900EC5AB3 /* SceneDelegate.swift */,
 				100491C024B652D900EC5AB3 /* SearchViewController.swift */,
-				100491E224B7AE7700EC5AB3 /* SearchResultCell.swift */,
-				100491DE24B7925800EC5AB3 /* SearchResult.swift */,
+				100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */,
 				100491C224B652D900EC5AB3 /* Main.storyboard */,
+				100491DE24B7925800EC5AB3 /* SearchResult.swift */,
+				100491E224B7AE7700EC5AB3 /* SearchResultCell.swift */,
 				100491E024B7A53900EC5AB3 /* SearchResultCell.xib */,
 				100491E424B9298D00EC5AB3 /* LoadingCell.xib */,
 				100491C524B652DB00EC5AB3 /* Assets.xcassets */,
@@ -212,6 +215,7 @@
 			files = (
 				100491C124B652D900EC5AB3 /* SearchViewController.swift in Sources */,
 				100491BD24B652D900EC5AB3 /* AppDelegate.swift in Sources */,
+				100491E724BA014C00EC5AB3 /* UIImageView+DownloadImage.swift in Sources */,
 				100491DF24B7925800EC5AB3 /* SearchResult.swift in Sources */,
 				100491BF24B652D900EC5AB3 /* SceneDelegate.swift in Sources */,
 				100491E324B7AE7700EC5AB3 /* SearchResultCell.swift in Sources */,
