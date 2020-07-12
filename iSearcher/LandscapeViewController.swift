@@ -12,10 +12,8 @@ class LandscapeViewController: UIViewController {
 
  @IBOutlet private weak var collectionView: UICollectionView!
 
-    var hasSearched = false
-    var isLoading = false
-    var dataTask: URLSessionDataTask?
-
+    var search: Search!
+   
     struct CollectionView {
         struct CellIdentifiers {
           static let searchResultCell = "Landscape"
@@ -28,50 +26,58 @@ class LandscapeViewController: UIViewController {
 
         let cellNib = UINib(nibName: CollectionView.CellIdentifiers.searchResultCell, bundle: nil)
           collectionView.register(cellNib, forCellWithReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell)
-       
-          if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40)/2, height: flowLayout.itemSize.height*1.5)
-           }
         
     }
-     
+    
+    override func viewWillLayoutSubviews() {
+         
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+          flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40)/2, height: flowLayout.itemSize.height*1.5)
+         }
+    }
+   
 }
 
 
 extension LandscapeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-//        if isLoading {
-//             return 1
-//          } else if !hasSearched {
-//            return 0
-//          } else if searchResults.count == 0 {
-//            return 1
-//        } else {
-            return searchResults.count
-//          }
+        switch search.state {
+        case .notSearchedYet, .loading, .noResults:
+          return 0
+        case .results(let list):
+           return list.count
+        }
+  
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if isLoading {
-          let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
-              CollectionView.CellIdentifiers.loadingCell, for: indexPath)
-          let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-          spinner.startAnimating()
-          return cell
-        } else if searchResults.count == 0 {
-          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCellCollection
-          cell.itemLabel.text = "Sorry, nothing found"
-          cell.artistNameLabel.text = "Empty"
-          return cell
-        } else {
-          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCellCollection
-          let searchResult = searchResults[indexPath.row]
-          cell.configure(for: searchResult)
-          return cell
+        
+        switch search.state {
+              case .notSearchedYet:
+                fatalError("Not possible")
+                
+              case .loading:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+                    CollectionView.CellIdentifiers.loadingCell, for: indexPath)
+                let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+                spinner.startAnimating()
+                return cell
+                
+              case .noResults:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCellCollection
+                cell.itemLabel.text = "Sorry, nothing found"
+                cell.artistNameLabel.text = "Empty"
+                return cell
+                
+              case .results(let list):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCellCollection
+                let searchResult = list[indexPath.row]
+                cell.configure(for: searchResult)
+                return cell
+  
+              }
         }
-    }
-     
-   
-}
+  
+  }
 

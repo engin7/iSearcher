@@ -22,6 +22,7 @@
 		100491ED24BB023200EC5AB3 /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491EC24BB023200EC5AB3 /* LandscapeViewController.swift */; };
 		100491EF24BB312C00EC5AB3 /* SearchResultCellCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491EE24BB312C00EC5AB3 /* SearchResultCellCollection.swift */; };
 		10A5875124BB6EE7001D583A /* Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A5875024BB6EE7001D583A /* Landscape.xib */; };
+		10A5875324BB9E8C001D583A /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A5875224BB9E8C001D583A /* Search.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		100491EC24BB023200EC5AB3 /* LandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeViewController.swift; sourceTree = "<group>"; };
 		100491EE24BB312C00EC5AB3 /* SearchResultCellCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellCollection.swift; sourceTree = "<group>"; };
 		10A5875024BB6EE7001D583A /* Landscape.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Landscape.xib; sourceTree = "<group>"; };
+		10A5875224BB9E8C001D583A /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */,
 				100491C224B652D900EC5AB3 /* Main.storyboard */,
 				100491DE24B7925800EC5AB3 /* SearchResult.swift */,
+				10A5875224BB9E8C001D583A /* Search.swift */,
 				100491E224B7AE7700EC5AB3 /* SearchResultCell.swift */,
 				100491E024B7A53900EC5AB3 /* SearchResultCell.xib */,
 				100491EE24BB312C00EC5AB3 /* SearchResultCellCollection.swift */,
@@ -233,6 +236,7 @@
 				100491DF24B7925800EC5AB3 /* SearchResult.swift in Sources */,
 				100491BF24B652D900EC5AB3 /* SceneDelegate.swift in Sources */,
 				100491E324B7AE7700EC5AB3 /* SearchResultCell.swift in Sources */,
+				10A5875324BB9E8C001D583A /* Search.swift in Sources */,
 				100491EF24BB312C00EC5AB3 /* SearchResultCellCollection.swift in Sources */,
 				100491EB24BA48B600EC5AB3 /* DetailViewController.swift in Sources */,
 			);
