@@ -18,7 +18,7 @@ class LandscapeViewController: UIViewController {
 
     struct CollectionView {
         struct CellIdentifiers {
-          static let searchResultCell = "SearchResultCellCollection"
+          static let searchResultCell = "Landscape"
           static let loadingCell = "LoadingCell"
         }
       }
@@ -28,11 +28,10 @@ class LandscapeViewController: UIViewController {
 
         let cellNib = UINib(nibName: CollectionView.CellIdentifiers.searchResultCell, bundle: nil)
           collectionView.register(cellNib, forCellWithReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell)
-      
- 
+       
           if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-              flowLayout.estimatedItemSize = CGSize(width: flowLayout.itemSize.width, height: flowLayout.itemSize.height*2)
-          }
+            flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40)/2, height: flowLayout.itemSize.height*1.5)
+           }
         
     }
      
