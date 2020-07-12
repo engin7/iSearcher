@@ -8,6 +8,9 @@
 
 import Foundation
 
+var searchResults = [SearchResult]()
+
+
 class ResultArray: Codable {
      
     var resultCount = 0

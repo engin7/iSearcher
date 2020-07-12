@@ -17,10 +17,11 @@ class SearchViewController: UIViewController {
         static let loadingCell = "LoadingCell"
       }
     }
+    
     var landscapeVC: LandscapeViewController?
     
     var dataTask: URLSessionDataTask?
-    var searchResults = [SearchResult]()
+//    var searchResults = [SearchResult]()
     var hasSearched = false
     var isLoading = false
     
@@ -146,7 +147,7 @@ extension SearchViewController: UISearchBarDelegate {
               } else if let httpResponse = response as? HTTPURLResponse,
                             httpResponse.statusCode == 200 {
                 if let data = data {
-                self.searchResults = self.parse(data: data)
+                 searchResults = self.parse(data: data)
                   DispatchQueue.main.async {
                     self.isLoading = false
                     self.tableView.reloadData()
