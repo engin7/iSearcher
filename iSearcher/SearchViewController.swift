@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
         static let loadingCell = "LoadingCell"
       }
     }
+    var landscapeVC: LandscapeViewController?
     
     var dataTask: URLSessionDataTask?
     var searchResults = [SearchResult]()
@@ -40,6 +41,20 @@ class SearchViewController: UIViewController {
         searchBar.becomeFirstResponder()
     }
     
+    override func willTransition(
+        to newCollection: UITraitCollection,
+        with coordinator: UIViewControllerTransitionCoordinator) {
+      super.willTransition(to: newCollection, with: coordinator)
+      switch newCollection.verticalSizeClass {
+      case .compact:
+        showLandscape(with: coordinator)
+      case .regular, .unspecified:
+        hideLandscape(with: coordinator)
+      @unknown default:
+        fatalError()
+      }
+    }
+    
     // MARK:- Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
       if segue.identifier == "Detail" {
@@ -53,6 +68,31 @@ class SearchViewController: UIViewController {
     
     // MARK:- Helper Methods
     
+    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+      guard landscapeVC == nil else { return }
+       if self.presentedViewController != nil {  // hide detail screen
+        self.dismiss(animated: true, completion: nil)
+      }
+      landscapeVC = storyboard!.instantiateViewController(
+                    withIdentifier: "LandscapeViewController")
+                    as? LandscapeViewController
+      if let controller = landscapeVC {
+      self.searchBar.resignFirstResponder()   // hide keyboard
+        controller.view.frame = view.bounds   // full screen
+        view.addSubview(controller.view)
+        addChild(controller)
+        controller.didMove(toParent: self)
+    } }
+    
+     func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        if let controller = landscapeVC {
+            controller.willMove(toParent: nil)
+            controller.view.removeFromSuperview()
+            controller.removeFromParent()
+            landscapeVC = nil
+        }
+    }
+        
     func iTunesURL(searchText: String) -> URL {
       let encodedText = searchText.addingPercentEncoding(
         withAllowedCharacters: CharacterSet.urlQueryAllowed)!
@@ -82,6 +122,7 @@ class SearchViewController: UIViewController {
       alert.addAction(action)
     }
     
+     
 }
 
 extension SearchViewController: UISearchBarDelegate {
