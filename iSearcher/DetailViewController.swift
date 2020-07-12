@@ -34,8 +34,7 @@ class DetailViewController: UIViewController {
     }
     
     deinit {
-      print("deinit \(self)")
-      downloadTask?.cancel()
+       downloadTask?.cancel()
     }
     
      // MARK:- Actions

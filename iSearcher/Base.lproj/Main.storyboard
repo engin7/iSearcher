@@ -49,13 +49,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138.40000000000001" y="112.89355322338831"/>
+            <point key="canvasLocation" x="437" y="113"/>
         </scene>
         <!--Landscape-->
         <scene sceneID="4IH-f6-Ln2">
             <objects>
                 <viewController storyboardIdentifier="LandscapeViewController" title="Landscape" id="duP-xS-jhY" customClass="LandscapeViewController" customModule="iSearcher" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="J6S-fj-6BJ">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="J6S-fj-6BJ">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -86,11 +86,12 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="H0v-7j-cJg" id="tpZ-zz-RuT"/>
+                        <segue destination="Kfg-75-g8g" kind="presentation" identifier="Detail" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="79x-0H-jwi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mLv-8r-3LW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="123.68815592203899" y="941.60000000000002"/>
+            <point key="canvasLocation" x="1180" y="-850"/>
         </scene>
         <!--Item Detail-->
         <scene sceneID="OsU-8h-Nvi">
@@ -233,4 +234,7 @@
     <resources>
         <image name="chevron.left.2" catalog="system" width="64" height="52"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="79x-0H-jwi"/>
+    </inferredMetricsTieBreakers>
 </document>

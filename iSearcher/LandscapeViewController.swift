@@ -78,6 +78,10 @@ extension LandscapeViewController: UICollectionViewDelegate, UICollectionViewDat
   
               }
         }
+     
+      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+     performSegue(withIdentifier: "Detail", sender: indexPath)
+    }
   
   }
 

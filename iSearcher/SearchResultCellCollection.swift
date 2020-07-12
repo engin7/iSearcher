@@ -19,6 +19,8 @@ class SearchResultCellCollection: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.contentView.isUserInteractionEnabled = true
+
     }
     
     override func prepareForReuse() {
@@ -26,8 +28,7 @@ class SearchResultCellCollection: UICollectionViewCell {
          downloadTask?.cancel()
          downloadTask = nil
        }
-      
-    
+       
      // MARK:- Public Methods
     func configure(for result: SearchResult) {
         itemLabel.text = result.itemName
@@ -39,7 +40,7 @@ class SearchResultCellCollection: UICollectionViewCell {
         }
         
         artworkImageView.image = UIImage(named: "Placeholder")
-        if let imageURL = URL(string: result.image) {
+        if let imageURL = URL(string: result.imageL) {
           downloadTask = artworkImageView.loadImage(url: imageURL)
         }
         
