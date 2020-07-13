@@ -8,6 +8,7 @@
 
 import Foundation
  
+public var visitedLinks: [String] = []
 
 class ResultArray: Codable {
      

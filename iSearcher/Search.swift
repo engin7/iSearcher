@@ -26,8 +26,7 @@ class Search {
     
   private(set) var state: State = .notSearchedYet
   private var dataTask: URLSessionDataTask? = nil
-
-  
+    
     func performSearch(for text: String, completion: @escaping SearchComplete ) {
         
         if !text.isEmpty {
@@ -44,11 +43,12 @@ class Search {
                }
                
                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
-                 let searchResults = self.parse(data: data)
-                 if searchResults.isEmpty {
+                let searchResults = self.parse(data: data)
+                if  searchResults.isEmpty {
                    newState = .noResults
                  } else {
                     newState = .results(searchResults)
+                    
                  }
                  success = true
                }
@@ -60,7 +60,23 @@ class Search {
              dataTask?.resume()
            }
     }
-           
+     
+    func visitedLink(index: IndexPath) {
+        
+         let row = index[1]
+         let url:String
+        
+           switch state {
+           case .notSearchedYet, .loading, .noResults:
+             return
+           case .results(let list):
+             url = list[row].storeURL
+           }
+         // check if exists
+        visitedLinks.append(url)
+     }
+    
+    
     // MARK:- Private Methods
 
     private func iTunesURL(searchText: String) -> URL {
@@ -76,12 +92,14 @@ class Search {
         do {
           let decoder = JSONDecoder()
           let result = try decoder.decode(ResultArray.self, from:data)
-          return result.results
+           return result.results
         } catch {
           print("JSON Error: \(error)")
       return [] }
       }
       
+      
+    
    }
 
  

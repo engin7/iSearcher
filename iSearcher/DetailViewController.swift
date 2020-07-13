@@ -41,11 +41,11 @@ class DetailViewController: UIViewController {
 
      @IBAction func backButtonPressed(_ sender: Any) {
          dismiss(animated: true, completion: nil)
+         
      }
       
      @IBAction func deleteItem(_ sender: Any) {
-         
-         
+     
      }
   
     // MARK:- Helper Methods
@@ -82,14 +82,5 @@ class DetailViewController: UIViewController {
       }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

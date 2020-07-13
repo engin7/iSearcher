@@ -166,7 +166,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
          didSelectRowAt indexPath: IndexPath) {
          tableView.deselectRow(at: indexPath, animated: true)
          performSegue(withIdentifier: "Detail", sender: indexPath)
-        
+         search.visitedLink(index: indexPath)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            tableView.reloadData()
+          }
     }
     
      func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
