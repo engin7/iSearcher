@@ -47,15 +47,20 @@ class SearchResultCell: UITableViewCell {
         if let imageURL = URL(string: result.image) {
           downloadTask = artworkImageView.loadImage(url: imageURL)
         }
-        if visitedLinks.contains(result.storeURL) {
-            itemLabel.textColor = .lightGray
-            artistNameLabel.textColor = .lightGray
-            artworkImageView.alpha = 0.4
-        } else {
-            itemLabel.textColor = .black
-            artistNameLabel.textColor = .darkGray
-            artworkImageView.alpha = 1
+       let visitedLinks  = UserDefaults.standard.object(forKey: "visitedLinks") as! [String]?
+        if visitedLinks != nil {
+        if visitedLinks!.contains(result.storeURL) {
+                itemLabel.textColor = .lightGray
+                artistNameLabel.textColor = .lightGray
+                artworkImageView.alpha = 0.4
+            } else {
+                itemLabel.textColor = .black
+                artistNameLabel.textColor = .darkGray
+                artworkImageView.alpha = 1
+            }
+          }
         }
+        
     }
    
-}
+

@@ -8,8 +8,6 @@
 
 import Foundation
  
-public var visitedLinks: [String] = []
-
 class ResultArray: Codable {
      
     var resultCount = 0

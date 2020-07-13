@@ -26,6 +26,7 @@ class Search {
     
   private(set) var state: State = .notSearchedYet
   private var dataTask: URLSessionDataTask? = nil
+  private var urlVisits: [String] = []
     
     func performSearch(for text: String, completion: @escaping SearchComplete ) {
         
@@ -72,10 +73,19 @@ class Search {
            case .results(let list):
              url = list[row].storeURL
            }
-         // check if exists
-        visitedLinks.append(url)
-     }
-    
+ 
+          self.urlVisits.append(url)
+           
+          let dummy =  UserDefaults.standard.object(forKey: "visitedLinks") as! [String]?
+         
+        if dummy != nil {
+            urlVisits.append(contentsOf: dummy!)
+        }
+          // remove duplicates
+         let unique = Array(Set(urlVisits))
+          UserDefaults.standard.set(unique, forKey: "visitedLinks")
+        }
+        
     
     // MARK:- Private Methods
 
@@ -99,8 +109,7 @@ class Search {
       }
       
       
-    
-   }
+    }
 
  
  
