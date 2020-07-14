@@ -11,6 +11,8 @@ import Foundation
 import UIKit
 
 
+ var deletedSearch : [SearchResult] = []
+
 class Search {
   
     enum State {
@@ -44,8 +46,7 @@ class Search {
                }
                
                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
-               var searchResults = self.parse(data: data)
-               searchResults = searchResults.filter { !deletedSearch.contains($0) }
+               let searchResults = self.parse(data: data)
 
                 if  searchResults.isEmpty {
                    newState = .noResults
@@ -57,6 +58,7 @@ class Search {
                }
                DispatchQueue.main.async {
                  self.state = newState
+                self.filterDeleted()
                  completion(success)
                 }
              })
@@ -64,6 +66,18 @@ class Search {
            }
     }
      
+    func filterDeleted() {
+        if deletedSearch != [] {
+        switch state {
+        case .notSearchedYet, .loading, .noResults:
+          return
+        case .results(var list):
+            list = list.filter { !deletedSearch.contains($0) }
+        self.state = .results(list)
+       }
+      }
+    }
+    
     func visitedLink(index: IndexPath) {
         
          let row = index[1]
@@ -114,4 +128,11 @@ class Search {
     }
 
  
- 
+ extension Search: DetailViewControllerDelegate {
+
+    func deleteItem(controller: DetailViewController) {
+        
+        filterDeleted()
+    }
+    
+}

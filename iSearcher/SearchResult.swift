@@ -8,20 +8,20 @@
 
 import Foundation
 
-var deletedSearch : [SearchResult] = []
 
 class ResultArray: Codable {
      
     var resultCount = 0
     var results = [SearchResult]()
+ 
 }
 
-class SearchResult:Codable, CustomStringConvertible, Equatable, Hashable {
-   
+class SearchResult:Codable, CustomStringConvertible, Hashable {
+    
     static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
         return lhs.storeURL == rhs.storeURL
     }
-    
+   
     func hash(into hasher: inout Hasher) {
         hasher.combine(storeURL)
     }

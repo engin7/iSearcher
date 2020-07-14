@@ -37,6 +37,10 @@ class SearchViewController: UIViewController {
         
      }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     override func willTransition(
         to newCollection: UITraitCollection,
         with coordinator: UIViewControllerTransitionCoordinator) {
@@ -60,6 +64,7 @@ class SearchViewController: UIViewController {
         let indexPath = sender as! IndexPath
         let searchResult = list[indexPath.row]
         dvc.searchResult = searchResult
+        dvc.delegate = search
         }
       }
     }
@@ -167,11 +172,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
          tableView.deselectRow(at: indexPath, animated: true)
          performSegue(withIdentifier: "Detail", sender: indexPath)
          search.visitedLink(index: indexPath)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             tableView.reloadData()
           }
     }
-    
+      
      func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
        switch search.state {
        case .notSearchedYet, .loading, .noResults:

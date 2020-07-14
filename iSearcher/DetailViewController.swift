@@ -8,8 +8,16 @@
 
 import UIKit
 
+protocol  DetailViewControllerDelegate: class {
+ 
+   func  deleteItem( controller: DetailViewController)
+  
+}
+
 class DetailViewController: UIViewController {
     
+    weak var delegate: DetailViewControllerDelegate?
+
     var searchResult: SearchResult!
     var downloadTask: URLSessionDownloadTask?
 
@@ -46,6 +54,7 @@ class DetailViewController: UIViewController {
       
      @IBAction func deleteItem(_ sender: Any) {
         deletedSearch.append(searchResult)
+        delegate?.deleteItem(controller: self)
         dismiss(animated: true, completion: nil)
      }
   
