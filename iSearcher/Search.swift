@@ -44,7 +44,9 @@ class Search {
                }
                
                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
-                let searchResults = self.parse(data: data)
+               var searchResults = self.parse(data: data)
+               searchResults = searchResults.filter { !deletedSearch.contains($0) }
+
                 if  searchResults.isEmpty {
                    newState = .noResults
                  } else {

@@ -45,7 +45,8 @@ class DetailViewController: UIViewController {
      }
       
      @IBAction func deleteItem(_ sender: Any) {
-     
+        deletedSearch.append(searchResult)
+        dismiss(animated: true, completion: nil)
      }
   
     // MARK:- Helper Methods
