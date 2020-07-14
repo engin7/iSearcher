@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 
- var deletedSearch : [SearchResult] = []
+ var deletedItems : [String] = []
 
 class Search {
   
@@ -67,15 +67,24 @@ class Search {
     }
      
     func filterDeleted() {
-        if deletedSearch != [] {
+        let persistDeleted =  UserDefaults.standard.object(forKey: "deletedItems") as! [String]?
+       
         switch state {
         case .notSearchedYet, .loading, .noResults:
           return
         case .results(var list):
-            list = list.filter { !deletedSearch.contains($0) }
-        self.state = .results(list)
+        
+             deletedItems.append(contentsOf: persistDeleted!)
+           
+            // remove duplicates
+           let unique = Array(Set(deletedItems))
+            UserDefaults.standard.set(unique, forKey: "deletedItems")
+           // filter the list not to show deleted items
+            list = list.filter({!unique.contains($0.storeURL)})
+
+            self.state = .results(list)
        }
-      }
+     
     }
     
     func visitedLink(index: IndexPath) {

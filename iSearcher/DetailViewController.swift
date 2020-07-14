@@ -53,7 +53,7 @@ class DetailViewController: UIViewController {
      }
       
      @IBAction func deleteItem(_ sender: Any) {
-        deletedSearch.append(searchResult)
+        deletedItems.append(searchResult.storeURL)
         delegate?.deleteItem(controller: self)
         dismiss(animated: true, completion: nil)
      }
