@@ -193,7 +193,7 @@
                                 <action selector="backButtonPressed:" destination="XWp-MK-k2I" id="lgM-rL-ctb"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="delete" id="UcX-PF-cep">
+                        <barButtonItem key="rightBarButtonItem" title="delete" image="trash" catalog="system" id="UcX-PF-cep">
                             <connections>
                                 <action selector="deleteItem:" destination="XWp-MK-k2I" id="fah-3F-rwL"/>
                             </connections>
@@ -233,6 +233,7 @@
     </scenes>
     <resources>
         <image name="chevron.left.2" catalog="system" width="64" height="52"/>
+        <image name="trash" catalog="system" width="60" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="79x-0H-jwi"/>

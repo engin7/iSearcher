@@ -62,11 +62,21 @@ class DetailViewController: UIViewController {
       
      @IBAction func deleteItem(_ sender: Any) {
         deletedItems.append(searchResult.storeURL)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-         self.delegate?.deleteItem(controller: self)
-         self.delegateRow?.removeCell(indexPath: self.indexPath!)
-       }
-        dismiss(animated: true, completion: nil)
+        
+        let message =  "Are you sure to delete this item?"
+        let alert = UIAlertController(title: "Deleting item", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { action in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.delegate?.deleteItem(controller: self)
+                    self.delegateRow?.removeCell(indexPath: self.indexPath!)
+                  }
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+       self.present(alert, animated: true)
      }
   
     // MARK:- Helper Methods
