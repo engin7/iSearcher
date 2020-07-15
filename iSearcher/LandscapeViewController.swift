@@ -36,6 +36,21 @@ class LandscapeViewController: UIViewController {
          }
     }
    
+    // MARK:- Navigation
+      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Detail" {
+          if case .results(let list) = search.state {
+          let nav = segue.destination as! UINavigationController
+          let dvc = nav.topViewController as! DetailViewController
+          let indexPath = sender as! IndexPath
+          let searchResult = list[indexPath.row]
+          dvc.indexPath = indexPath
+          dvc.searchResult = searchResult
+          dvc.delegate = search
+          }
+        }
+      }
+    
 }
 
 
