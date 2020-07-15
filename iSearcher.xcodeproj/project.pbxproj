@@ -51,7 +51,7 @@
 		100491C324B652D900EC5AB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		100491C524B652DB00EC5AB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		100491CA24B652DB00EC5AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		100491CF24B652DB00EC5AB3 /* iSearcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSearcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		100491CF24B652DB00EC5AB3 /* iSearcherURLSessionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSearcherURLSessionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		100491D324B652DB00EC5AB3 /* iSearcherURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iSearcherURLSessionTests.swift; sourceTree = "<group>"; };
 		100491D524B652DB00EC5AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		100491DE24B7925800EC5AB3 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				100491B924B652D900EC5AB3 /* iSearcher.app */,
-				100491CF24B652DB00EC5AB3 /* iSearcherTests.xctest */,
+				100491CF24B652DB00EC5AB3 /* iSearcherURLSessionTests.xctest */,
 				10A5875F24BFB479001D583A /* iSearcherParseTests.xctest */,
 			);
 			name = Products;
@@ -215,9 +215,9 @@
 			productReference = 100491B924B652D900EC5AB3 /* iSearcher.app */;
 			productType = "com.apple.product-type.application";
 		};
-		100491CE24B652DB00EC5AB3 /* iSearcherTests */ = {
+		100491CE24B652DB00EC5AB3 /* iSearcherURLSessionTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 100491DB24B652DB00EC5AB3 /* Build configuration list for PBXNativeTarget "iSearcherTests" */;
+			buildConfigurationList = 100491DB24B652DB00EC5AB3 /* Build configuration list for PBXNativeTarget "iSearcherURLSessionTests" */;
 			buildPhases = (
 				100491CB24B652DB00EC5AB3 /* Sources */,
 				100491CC24B652DB00EC5AB3 /* Frameworks */,
@@ -228,9 +228,9 @@
 			dependencies = (
 				100491D124B652DB00EC5AB3 /* PBXTargetDependency */,
 			);
-			name = iSearcherTests;
+			name = iSearcherURLSessionTests;
 			productName = iSearcherTests;
-			productReference = 100491CF24B652DB00EC5AB3 /* iSearcherTests.xctest */;
+			productReference = 100491CF24B652DB00EC5AB3 /* iSearcherURLSessionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		10A5875E24BFB479001D583A /* iSearcherParseTests */ = {
@@ -288,7 +288,7 @@
 			projectRoot = "";
 			targets = (
 				100491B824B652D900EC5AB3 /* iSearcher */,
-				100491CE24B652DB00EC5AB3 /* iSearcherTests */,
+				100491CE24B652DB00EC5AB3 /* iSearcherURLSessionTests */,
 				10A5875E24BFB479001D583A /* iSearcherParseTests */,
 			);
 		};
@@ -541,7 +541,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T8ZJ7M7C9;
-				INFOPLIST_FILE = iSearcherTests/Info.plist;
+				INFOPLIST_FILE = iSearcherURLSessionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -563,7 +563,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6T8ZJ7M7C9;
-				INFOPLIST_FILE = iSearcherTests/Info.plist;
+				INFOPLIST_FILE = iSearcherURLSessionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -639,7 +639,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		100491DB24B652DB00EC5AB3 /* Build configuration list for PBXNativeTarget "iSearcherTests" */ = {
+		100491DB24B652DB00EC5AB3 /* Build configuration list for PBXNativeTarget "iSearcherURLSessionTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				100491DC24B652DB00EC5AB3 /* Debug */,
