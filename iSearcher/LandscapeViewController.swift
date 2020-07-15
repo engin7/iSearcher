@@ -16,7 +16,7 @@ class LandscapeViewController: UIViewController {
    
     struct CollectionView {
         struct CellIdentifiers {
-          static let searchResultCell = "Landscape"
+          static let searchResultCell = "LandscapeCell"
           static let loadingCell = "LoadingCell"
         }
       }
@@ -81,13 +81,13 @@ extension LandscapeViewController: UICollectionViewDelegate, UICollectionViewDat
                 return cell
                 
               case .noResults:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCellCollection
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! LandscapeCell
                 cell.itemLabel.text = "Sorry, nothing found"
                 cell.artistNameLabel.text = "Empty"
                 return cell
                 
               case .results(let list):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCellCollection
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! LandscapeCell
                 let searchResult = list[indexPath.row]
                 cell.configure(for: searchResult)
                 return cell
