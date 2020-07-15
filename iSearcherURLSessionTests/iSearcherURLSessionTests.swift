@@ -9,7 +9,8 @@
 import XCTest
 @testable import iSearcher
 
-class iSearcherTests: XCTestCase {
+
+class iSearcherURLSessionTests: XCTestCase {
 
     var sut:  URLSession! //System Under Test
 
