@@ -37,10 +37,7 @@ class SearchViewController: UIViewController {
         
      }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
-    }
-    
+   
     override func willTransition(
         to newCollection: UITraitCollection,
         with coordinator: UIViewControllerTransitionCoordinator) {
@@ -63,8 +60,10 @@ class SearchViewController: UIViewController {
         let dvc = nav.topViewController as! DetailViewController
         let indexPath = sender as! IndexPath
         let searchResult = list[indexPath.row]
+        dvc.indexPath = indexPath
         dvc.searchResult = searchResult
         dvc.delegate = search
+        dvc.delegateRow = self
         }
       }
     }
@@ -188,3 +187,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+extension SearchViewController: DeleteRowInTableviewDelegate {
+
+func removeCell(indexPath: IndexPath){
+    tableView.beginUpdates()
+    tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+    tableView.endUpdates()
+  }
+}

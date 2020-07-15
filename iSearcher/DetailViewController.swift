@@ -11,14 +11,22 @@ import UIKit
 protocol  DetailViewControllerDelegate: class {
  
    func  deleteItem( controller: DetailViewController)
-  
+      
 }
 
+protocol DeleteRowInTableviewDelegate: class {
+   
+    func removeCell(indexPath: IndexPath)
+
+}
+ 
 class DetailViewController: UIViewController {
     
     weak var delegate: DetailViewControllerDelegate?
+    weak var delegateRow: DeleteRowInTableviewDelegate?
 
     var searchResult: SearchResult!
+    var indexPath:IndexPath?
     var downloadTask: URLSessionDownloadTask?
 
     @IBOutlet weak var artworkImageView: UIImageView!
@@ -54,7 +62,10 @@ class DetailViewController: UIViewController {
       
      @IBAction func deleteItem(_ sender: Any) {
         deletedItems.append(searchResult.storeURL)
-        delegate?.deleteItem(controller: self)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+         self.delegate?.deleteItem(controller: self)
+         self.delegateRow?.removeCell(indexPath: self.indexPath!)
+       }
         dismiss(animated: true, completion: nil)
      }
   
