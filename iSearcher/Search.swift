@@ -74,8 +74,9 @@ class Search {
           return
         case .results(var list):
         
-             deletedItems.append(contentsOf: persistDeleted!)
-           
+            if persistDeleted != nil {
+                deletedItems.append(contentsOf: persistDeleted!)
+            }
             // remove duplicates
            let unique = Array(Set(deletedItems))
             UserDefaults.standard.set(unique, forKey: "deletedItems")
