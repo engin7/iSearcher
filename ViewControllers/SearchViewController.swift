@@ -36,7 +36,6 @@ class SearchViewController: UIViewController {
                            TableView.CellIdentifiers.loadingCell)
         
      }
-    
    
     override func willTransition(
         to newCollection: UITraitCollection,
@@ -125,7 +124,6 @@ extension SearchViewController: UISearchBarDelegate {
               tableView.reloadData()
               searchBar.resignFirstResponder()
             }
-  
 }
  
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
