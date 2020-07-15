@@ -47,6 +47,7 @@ class LandscapeViewController: UIViewController {
           dvc.indexPath = indexPath
           dvc.searchResult = searchResult
           dvc.delegate = search
+          dvc.delegateCV = self
           }
         }
       }
@@ -100,3 +101,11 @@ extension LandscapeViewController: UICollectionViewDelegate, UICollectionViewDat
   
   }
 
+extension LandscapeViewController: CollectionViewDelegate {
+
+func removeCell(indexPath: IndexPath){
+    self.collectionView.performBatchUpdates({
+           self.collectionView.deleteItems(at:[indexPath])
+       }, completion:nil)
+  }
+}
