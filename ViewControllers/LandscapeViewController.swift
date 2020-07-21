@@ -12,9 +12,7 @@ class LandscapeViewController: UIViewController {
 
  @IBOutlet private weak var collectionView: UICollectionView!
 
-    var search: Search!
-   
-    struct CollectionView {
+        struct CollectionView {
         struct CellIdentifiers {
           static let searchResultCell = "LandscapeCell"
           static let loadingCell = "LoadingCell"
@@ -39,14 +37,13 @@ class LandscapeViewController: UIViewController {
     // MARK:- Navigation
       override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-          if case .results(let list) = search.state {
+            if case .results(let list) = NetworkManager.shared.state {
           let nav = segue.destination as! UINavigationController
           let dvc = nav.topViewController as! DetailViewController
           let indexPath = sender as! IndexPath
           let searchResult = list[indexPath.row]
           dvc.indexPath = indexPath
           dvc.searchResult = searchResult
-          dvc.delegate = search
           dvc.delegateCV = self
           }
         }
@@ -58,7 +55,7 @@ class LandscapeViewController: UIViewController {
 extension LandscapeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        switch search.state {
+        switch NetworkManager.shared.state {
         case .notSearchedYet, .loading, .noResults:
           return 0
         case .results(let list):
@@ -69,7 +66,7 @@ extension LandscapeViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        switch search.state {
+        switch NetworkManager.shared.state {
               case .notSearchedYet:
                 fatalError("Not possible")
                 

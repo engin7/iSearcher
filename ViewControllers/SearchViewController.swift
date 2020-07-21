@@ -19,7 +19,7 @@ class SearchViewController: UIViewController {
     }
     
     var landscapeVC: LandscapeViewController?
-    private let search = Search()
+    private let search = NetworkManager.shared
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -61,7 +61,6 @@ class SearchViewController: UIViewController {
         let searchResult = list[indexPath.row]
         dvc.indexPath = indexPath
         dvc.searchResult = searchResult
-        dvc.delegate = search
         dvc.delegateRow = self
         }
       }
@@ -86,8 +85,7 @@ class SearchViewController: UIViewController {
                     withIdentifier: "LandscapeViewController")
                     as? LandscapeViewController
       if let controller = landscapeVC {
-      controller.search = search  // pass in results array
-      self.searchBar.resignFirstResponder()   // hide keyboard
+       self.searchBar.resignFirstResponder()   // hide keyboard
         controller.view.frame = view.bounds   // full screen
         view.addSubview(controller.view)
         addChild(controller)
@@ -168,7 +166,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
          didSelectRowAt indexPath: IndexPath) {
          tableView.deselectRow(at: indexPath, animated: true)
          performSegue(withIdentifier: "Detail", sender: indexPath)
-         search.visitedLink(index: indexPath)
+         visitedLink(index: indexPath)
          DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             tableView.reloadData()
           }

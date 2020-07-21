@@ -60,7 +60,8 @@ class SearchResult:Codable, CustomStringConvertible, Hashable {
       } else if let genres = bookGenre {
         return genres.joined(separator: ", ")
       }
-    return "" }
+    return ""
+    }
     // instead of putting service data directly, modify it so its more readable & human-friendly
    var type:String {
       let kind = self.kind ?? "audiobook"

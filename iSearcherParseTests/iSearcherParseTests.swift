@@ -12,11 +12,11 @@ import XCTest
 
 class iSearcherParseTests: XCTestCase {
 
-    var sut:  Search! //System Under Test
+    var sut:  NetworkManager.shared! //System Under Test
     
     override func setUp() {
         super.setUp()
-        sut = Search()
+        sut = NetworkManager.shared()
     }
 
     override func tearDown() {
