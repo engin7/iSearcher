@@ -12,14 +12,10 @@ var deletedItems : [String] = []
 var urlVisits: [String] = []
 
 
-func filterDeleted() {
+func filterDeleted(list: [SearchResult]) -> [SearchResult]  {
       let persistDeleted =  UserDefaults.standard.object(forKey: "deletedItems") as! [String]?
      
-    switch NetworkManager.shared.state {
-      case .notSearchedYet, .loading, .noResults:
-        return
-      case .results(var list):
-      
+    
           if persistDeleted != nil {
               deletedItems.append(contentsOf: persistDeleted!)
           }
@@ -27,11 +23,7 @@ func filterDeleted() {
          let unique = Array(Set(deletedItems))
           UserDefaults.standard.set(unique, forKey: "deletedItems")
          // filter the list not to show deleted items
-          list = list.filter({!unique.contains($0.storeURL)})
-
-          NetworkManager.shared.state = .results(list)
-     }
-   
+          return list.filter({!unique.contains($0.storeURL)})
   }
 
    func visitedLink(index: IndexPath) {

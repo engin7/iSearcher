@@ -7,16 +7,11 @@
 //
 
 import UIKit
-
-protocol  DetailViewControllerDelegate: class {
  
-   func  deleteItem( controller: DetailViewController)
-      
-}
 
 protocol DeleteRowInTableviewDelegate: class {
    
-    func removeCell(indexPath: IndexPath)
+    func removeCell(indexPath: IndexPath,  result: SearchResult)
 
 }
 
@@ -28,7 +23,6 @@ protocol CollectionViewDelegate: class {
  
 class DetailViewController: UIViewController {
     
-    weak var delegate: DetailViewControllerDelegate?
     weak var delegateRow: DeleteRowInTableviewDelegate?
     weak var delegateCV: CollectionViewDelegate?
 
@@ -68,7 +62,6 @@ class DetailViewController: UIViewController {
      }
       
      @IBAction func deleteItem(_ sender: Any) {
-        deletedItems.append(searchResult.storeURL)
         
         let message =  "Are you sure to delete this item?"
         let alert = UIAlertController(title: "Deleting item", message: message, preferredStyle: .alert)
@@ -76,10 +69,11 @@ class DetailViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.delegate?.deleteItem(controller: self)
-                    self.delegateRow?.removeCell(indexPath: self.indexPath!)
-                    self.delegateCV?.removeCell(indexPath: self.indexPath!)
+          
+             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+ 
+                self.delegateRow?.removeCell(indexPath: self.indexPath!, result: self.searchResult)
+                self.delegateCV?.removeCell(indexPath: self.indexPath!)
                   }
             self.dismiss(animated: true, completion: nil)
         }))

@@ -58,7 +58,8 @@ class SearchViewController: UIViewController {
         let nav = segue.destination as! UINavigationController
         let dvc = nav.topViewController as! DetailViewController
         let indexPath = sender as! IndexPath
-        let searchResult = list[indexPath.row]
+
+        let searchResult = filterDeleted(list: list)[indexPath.row]
         dvc.indexPath = indexPath
         dvc.searchResult = searchResult
         dvc.delegateRow = self
@@ -134,7 +135,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
           case .noResults:
             return 1
           case .results(let list):
-            return list.count
+             return filterDeleted(list: list).count
           }
     }
     
@@ -156,7 +157,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
           case .results(let list):
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
             
-            let searchResult = list[indexPath.row]
+            let searchResult = filterDeleted(list: list)[indexPath.row]
             cell.configure(for: searchResult)
             return cell
           }
@@ -184,10 +185,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension SearchViewController: DeleteRowInTableviewDelegate {
-
-func removeCell(indexPath: IndexPath){
+    
+    func removeCell(indexPath: IndexPath, result: SearchResult){
     tableView.beginUpdates()
+    deletedItems.append(result.storeURL)
     tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
     tableView.endUpdates()
   }
 }
+

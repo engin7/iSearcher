@@ -49,14 +49,16 @@ typealias SearchComplete = (Bool) -> Void
                   if  searchResults.isEmpty {
                      newState = .noResults
                    } else {
-                      newState = .results(searchResults)
+                      
+                let filteredResults = filterDeleted(list: searchResults)
+                    
+                    newState = .results(filteredResults)
                       
                    }
                    success = true
                  }
                  DispatchQueue.main.async {
                    self.state = newState
-                   filterDeleted()
                    completion(success)
                   }
                })
