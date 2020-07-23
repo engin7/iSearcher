@@ -10,47 +10,47 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
-  // use constant cell identifier so you change it only at one place in the future
-    struct TableView {
-      struct CellIdentifiers {
-        static let searchResultCell = "SearchResultCell"
-        static let loadingCell = "LoadingCell"
-      }
+
+    struct CollectionView  {
+    struct CellIdentifiers {
+      static let searchResultCell = "LandscapeCell"
+      static let loadingCell = "LoadingCell"
     }
+  }
     
-    var landscapeVC: LandscapeViewController?
-    private let search = NetworkManager.shared
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+ private let search = NetworkManager.shared
+ @IBOutlet private weak var collectionView: UICollectionView!
+ @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // register nib files
-        var cellNib = UINib(nibName: TableView.CellIdentifiers.searchResultCell, bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier:
-                                    TableView.CellIdentifiers.searchResultCell)
-        cellNib = UINib(nibName: TableView.CellIdentifiers.loadingCell,
+        var cellNib = UINib(nibName: CollectionView.CellIdentifiers.searchResultCell, bundle: nil)
+                collectionView.register(cellNib, forCellWithReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell)
+              
+        cellNib = UINib(nibName: CollectionView.CellIdentifiers.loadingCell,
                         bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier:
-                           TableView.CellIdentifiers.loadingCell)
+        collectionView.register(cellNib, forCellWithReuseIdentifier:
+                           CollectionView.CellIdentifiers.loadingCell)
         
      }
    
-    override func willTransition(
-        to newCollection: UITraitCollection,
-        with coordinator: UIViewControllerTransitionCoordinator) {
-      super.willTransition(to: newCollection, with: coordinator)
-      switch newCollection.verticalSizeClass {
-      case .compact:
-        showLandscape(with: coordinator)
-      case .regular, .unspecified:
-        hideLandscape(with: coordinator)
-      @unknown default:
-        fatalError()
-      }
-    }
     
+       override func viewWillLayoutSubviews() {
+
+              super.viewWillLayoutSubviews()
+
+           guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+
+           if (UIWindow.isLandscape) {
+                  flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40)/2, height: flowLayout.itemSize.height*1.5)
+           } else {
+               flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40), height: flowLayout.itemSize.height)
+           }
+
+            }
+    
+   
     // MARK:- Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
       if segue.identifier == "Detail" {
@@ -62,8 +62,7 @@ class SearchViewController: UIViewController {
         let searchResult = filterDeleted(list: list)[indexPath.row]
         dvc.indexPath = indexPath
         dvc.searchResult = searchResult
-        dvc.delegateRow = self
-        }
+         }
       }
     }
     
@@ -76,32 +75,7 @@ class SearchViewController: UIViewController {
       alert.addAction(action)
       present(alert, animated: true, completion: nil)
     }
-    
-    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
-      guard landscapeVC == nil else { return }
-       if self.presentedViewController != nil {  // hide detail screen
-        self.dismiss(animated: true, completion: nil)
-      }
-      landscapeVC = storyboard!.instantiateViewController(
-                    withIdentifier: "LandscapeViewController")
-                    as? LandscapeViewController
-      if let controller = landscapeVC {
-       self.searchBar.resignFirstResponder()   // hide keyboard
-        controller.view.frame = view.bounds   // full screen
-        view.addSubview(controller.view)
-        addChild(controller)
-        controller.didMove(toParent: self)
-    } }
-    
-     func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
-        if let controller = landscapeVC {
-            controller.willMove(toParent: nil)
-            controller.view.removeFromSuperview()
-            controller.removeFromParent()
-            landscapeVC = nil
-        }
-    }
-        
+     
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -117,17 +91,20 @@ extension SearchViewController: UISearchBarDelegate {
        if !success {
                   self.showNetworkError()
                 }
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
                })
               
-              tableView.reloadData()
+              collectionView.reloadData()
               searchBar.resignFirstResponder()
             }
 }
  
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          switch search.state {
+  
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+          
+         switch search.state {
           case .notSearchedYet:
             return 0
           case .loading:
@@ -137,60 +114,52 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
           case .results(let list):
              return filterDeleted(list: list).count
           }
-    }
     
-    func tableView(_ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-          switch search.state {
-          case .notSearchedYet:
-            fatalError("Not possible")
-            
-          case .loading:
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
-            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-            spinner.startAnimating()
-            return cell
-            
-          case .noResults:
-            return tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath)
-            
-          case .results(let list):
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
-            
-            let searchResult = filterDeleted(list: list)[indexPath.row]
-            cell.configure(for: searchResult)
-            return cell
-          }
         }
     
-    func tableView(_ tableView: UITableView,
-         didSelectRowAt indexPath: IndexPath) {
-         tableView.deselectRow(at: indexPath, animated: true)
-         performSegue(withIdentifier: "Detail", sender: indexPath)
-         visitedLink(index: indexPath)
-         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            tableView.reloadData()
-          }
-    }
-      
-     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-       switch search.state {
-       case .notSearchedYet, .loading, .noResults:
-         return nil
-       case .results:
-         return indexPath
-       }
-     }
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+              
+              switch search.state {
+                    case .notSearchedYet:
+                      fatalError("Not possible")
+                      
+                    case .loading:
+                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+                          CollectionView.CellIdentifiers.loadingCell, for: indexPath)
+                      let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+                      spinner.startAnimating()
+                      return cell
+                      
+                    case .noResults:
+                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! LandscapeCell
+                      cell.itemLabel.text = "Sorry, nothing found"
+                      cell.artistNameLabel.text = "Empty"
+                      return cell
+                      
+                    case .results(let list):
+                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! LandscapeCell
+                       let searchResult = filterDeleted(list: list)[indexPath.row]
+                       cell.configure(for: searchResult)
+                       return cell
+        
+                    }
+              }
     
-}
-
-extension SearchViewController: DeleteRowInTableviewDelegate {
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+             performSegue(withIdentifier: "Detail", sender: indexPath)
+            visitedLink(index: indexPath)
+            //reload
+           }
+        }
+  
+    extension SearchViewController: CollectionViewDelegate {
     
     func removeCell(indexPath: IndexPath, result: SearchResult){
-    tableView.beginUpdates()
-    deletedItems.append(result.storeURL)
-    tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-    tableView.endUpdates()
-  }
-}
+      self.collectionView.performBatchUpdates({
+        deletedItems.append(result.storeURL)
+        self.collectionView.deleteItems(at:[indexPath])
+         }, completion:nil)
+      }
+     
+    }
 

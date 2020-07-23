@@ -8,23 +8,16 @@
 
 import UIKit
  
-
-protocol DeleteRowInTableviewDelegate: class {
-   
-    func removeCell(indexPath: IndexPath,  result: SearchResult)
-
-}
-
+ 
 protocol CollectionViewDelegate: class {
    
-    func removeCell(indexPath: IndexPath)
+    func removeCell(indexPath: IndexPath,  result: SearchResult)
 
 }
  
 class DetailViewController: UIViewController {
     
-    weak var delegateRow: DeleteRowInTableviewDelegate?
-    weak var delegateCV: CollectionViewDelegate?
+     weak var delegateCV: CollectionViewDelegate?
 
     var searchResult: SearchResult!
     var indexPath:IndexPath?
@@ -71,9 +64,8 @@ class DetailViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
           
              DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
- 
-                self.delegateRow?.removeCell(indexPath: self.indexPath!, result: self.searchResult)
-                self.delegateCV?.removeCell(indexPath: self.indexPath!)
+  
+                self.delegateCV?.removeCell(indexPath: self.indexPath!, result: self.searchResult)
                   }
             self.dismiss(animated: true, completion: nil)
         }))
