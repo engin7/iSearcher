@@ -99,6 +99,7 @@
 		100491B024B652D900EC5AB3 = {
 			isa = PBXGroup;
 			children = (
+				1070935824CA09D200D0B552 /* Extensions */,
 				1070935424C79C5100D0B552 /* Managers */,
 				100491BB24B652D900EC5AB3 /* iSearcher */,
 				10A5875624BF69C1001D583A /* Resources */,
@@ -143,11 +144,18 @@
 		1070935424C79C5100D0B552 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */,
 				10A5875224BB9E8C001D583A /* NetworkManager.swift */,
 				1070935524C79D0F00D0B552 /* PersistenceManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		1070935824CA09D200D0B552 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		10A5875424BF5F36001D583A /* ViewControllers */ = {
