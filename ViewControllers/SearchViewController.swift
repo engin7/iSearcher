@@ -43,9 +43,9 @@ class SearchViewController: UIViewController {
            guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
 
            if (UIWindow.isLandscape) {
-                  flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40)/2, height: flowLayout.itemSize.height*1.5)
+                  flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40)/2, height: flowLayout.itemSize.height*2)
            } else {
-               flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40), height: flowLayout.itemSize.height)
+            flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40), height: flowLayout.itemSize.height*2)
            }
 
             }
@@ -62,6 +62,7 @@ class SearchViewController: UIViewController {
         let searchResult = filterDeleted(list: list)[indexPath.row]
         dvc.indexPath = indexPath
         dvc.searchResult = searchResult
+        dvc.delegateCV = self
          }
       }
     }

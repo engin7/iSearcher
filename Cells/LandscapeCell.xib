@@ -10,10 +10,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="2c3-2x-K8o" customClass="LandscapeCell" customModule="iSearcher" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+            <rect key="frame" x="0.0" y="0.0" width="300" height="366"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zaU-8e-EW5">
-                <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+                <rect key="frame" x="0.0" y="0.0" width="300" height="366"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="item" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQj-PT-NhC">
@@ -37,13 +37,13 @@
                 </subviews>
                 <color key="backgroundColor" red="1" green="0.99998813870000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             </collectionViewCellContentView>
-            <size key="customSize" width="306" height="287"/>
+            <size key="customSize" width="306" height="403"/>
             <connections>
                 <outlet property="artistNameLabel" destination="xQS-z8-6xM" id="ewl-Nl-yhW"/>
                 <outlet property="artworkImageView" destination="nUI-27-bhK" id="FVY-K7-ffP"/>
                 <outlet property="itemLabel" destination="wQj-PT-NhC" id="ygb-pM-f8S"/>
             </connections>
-            <point key="canvasLocation" x="247.37631184407797" y="56"/>
+            <point key="canvasLocation" x="247.37631184407797" y="148.80000000000001"/>
         </collectionViewCell>
     </objects>
 </document>

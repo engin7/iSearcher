@@ -17,8 +17,7 @@ protocol CollectionViewDelegate: class {
  
 class DetailViewController: UIViewController {
     
-     weak var delegateCV: CollectionViewDelegate?
-
+    weak var delegateCV: CollectionViewDelegate?
     var searchResult: SearchResult!
     var indexPath:IndexPath?
     var downloadTask: URLSessionDownloadTask?
