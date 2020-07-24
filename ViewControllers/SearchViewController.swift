@@ -36,20 +36,7 @@ class SearchViewController: UIViewController {
      }
    
     
-       override func viewWillLayoutSubviews() {
-
-              super.viewWillLayoutSubviews()
-
-           guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-
-           if (UIWindow.isLandscape) {
-                  flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40)/2, height: flowLayout.itemSize.height*2)
-           } else {
-            flowLayout.estimatedItemSize = CGSize(width: (self.collectionView.frame.width-40), height: flowLayout.itemSize.height*2)
-           }
-
-            }
-    
+ 
    
     // MARK:- Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -101,7 +88,7 @@ extension SearchViewController: UISearchBarDelegate {
 }
  
   
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
     
       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
           
