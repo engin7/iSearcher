@@ -43,13 +43,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
           if case .results(let list) = search.state {
         PersistenceManager.updateItem(item: dataSource.getFilteredData(list: list)[indexPath.row], actionType: .visit) { [weak self] error in
             guard self != nil else { return }
-            guard let error = error else { return}
-            let message =  error.rawValue
-            let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
-                self?.dismiss(animated: true, completion: nil)
-                  }))
-            self?.present(alert, animated: true)
         }
             }
       }

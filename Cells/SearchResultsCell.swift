@@ -46,8 +46,7 @@ class SearchResultsCell: UICollectionViewCell {
         if let imageURL = URL(string: result.imageL) {
         downloadTask = NetworkManager.shared.loadImage(imageView: artworkImageView, url: imageURL)
         }
-        
-        
+         
              PersistenceManager.retrieveVisitedItems {
                  [weak self] result in
                  guard self != nil else { return }
