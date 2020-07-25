@@ -34,7 +34,7 @@ class SearchResult:Codable, CustomStringConvertible, Hashable {
     var trackName: String? = ""
     var itemName:String {
     return trackName ?? collectionName ?? ""
-  }
+    }
     var kind: String? = ""
     var trackPrice: Double? = 0.0
     var currency = ""
@@ -79,13 +79,13 @@ class SearchResult:Codable, CustomStringConvertible, Hashable {
       default: break
       }
       return "Unknown"
-    }
+   }
     
-    var artist: String {
+   var artist: String {
         return artistName ?? ""
-    }
+   }
     
-    enum CodingKeys: String, CodingKey {
+   enum CodingKeys: String, CodingKey {
       case image = "artworkUrl60"
       case imageL = "artworkUrl100"
       case itemGenre = "primaryGenreName"
@@ -94,7 +94,7 @@ class SearchResult:Codable, CustomStringConvertible, Hashable {
       case kind, artistName, currency
       case trackName, trackPrice, trackViewUrl
       case collectionName, collectionViewUrl, collectionPrice
-    }
+   }
     
 }
 

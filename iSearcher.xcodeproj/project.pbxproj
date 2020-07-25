@@ -46,7 +46,7 @@
 		100491B924B652D900EC5AB3 /* iSearcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSearcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		100491BC24B652D900EC5AB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		100491BE24B652D900EC5AB3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		100491C024B652D900EC5AB3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		100491C024B652D900EC5AB3 /* SearchViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		100491C324B652D900EC5AB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		100491C524B652DB00EC5AB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		100491CA24B652DB00EC5AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 		100491D324B652DB00EC5AB3 /* iSearcherURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iSearcherURLSessionTests.swift; sourceTree = "<group>"; };
 		100491D524B652DB00EC5AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		100491DE24B7925800EC5AB3 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
-		100491EA24BA48B600EC5AB3 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		100491EA24BA48B600EC5AB3 /* DetailViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		100491EE24BB312C00EC5AB3 /* SearchResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCell.swift; sourceTree = "<group>"; };
 		1070935524C79D0F00D0B552 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		1070935B24CA93D600D0B552 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };

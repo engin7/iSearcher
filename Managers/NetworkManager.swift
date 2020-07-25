@@ -9,7 +9,6 @@
  
 import UIKit
 
-
 class NetworkManager {
 static let shared = NetworkManager() // singleton
 private let baseURL = "https://itunes.apple.com/search?term=%@&limit=100"
@@ -33,54 +32,50 @@ typealias SearchComplete = (Bool) -> Void
           if !text.isEmpty {
              dataTask?.cancel()  // new search cancels old one
              state = .loading
-               let url = iTunesURL(searchText: text)
-               let session = URLSession.shared
-               dataTask = session.dataTask(with: url, completionHandler: {data, response, error in
-                 var newState = State.notSearchedYet
-                 var success = false
-                 // if the search cancelled ignore error code and return
-                 if let error = error as NSError?, error.code == -999 {
-                   return
-                 }
-                 
-                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
+             let url = iTunesURL(searchText: text)
+             let session = URLSession.shared
+             dataTask = session.dataTask(with: url, completionHandler: {data, response, error in
+             var newState = State.notSearchedYet
+             var success = false
+             // if the search cancelled ignore error code and return
+             if let error = error as NSError?, error.code == -999 {
+               return
+             }
+             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
                  let searchResults = self.parse(data: data)
 
-                  if  searchResults.isEmpty {
+                 if  searchResults.isEmpty {
                      newState = .noResults
-                   } else {
+                 } else {
                     newState = .results(searchResults)
-                   }
-                   success = true
+                 }
+                    success = true
                  }
                  DispatchQueue.main.async {
                    self.state = newState
                    completion(success) //Bool
                   }
-               })
+            })
                dataTask?.resume()
-             }
-      }
+        }
+}
     
      func loadImage(imageView: UIImageView, url: URL) -> URLSessionDownloadTask {
         let session = URLSession.shared
         let downloadTask = session.downloadTask(with: url,
-            completionHandler: { [weak imageView] url, response, error in
+        completionHandler: { [weak imageView] url, response, error in
           if error == nil, let url = url,
-             let data = try? Data(contentsOf: url),
-             let image = UIImage(data: data) {
-
+          let data = try? Data(contentsOf: url),
+          let image = UIImage(data: data) {
             DispatchQueue.main.async {
                 if let weakSelf = imageView as UIImageView? {
                 weakSelf.image = image
               }
-    } }
-    })
-
+          } }
+        })
         downloadTask.resume()
         return downloadTask
-      }
-    
+    }
     
     // MARK:- Private Methods
 
@@ -90,9 +85,9 @@ typealias SearchComplete = (Bool) -> Void
           let endPoint = String(format: baseURL, encodedText) //term=%@ adds text to %@
           let url = URL(string: endPoint)
           return url!
-        }
+      }
          
-        private func parse(data: Data) -> [SearchResult] {
+      private func parse(data: Data) -> [SearchResult] {
           do {
             let decoder = JSONDecoder()
             let result = try decoder.decode(ResultArray.self, from:data)
@@ -100,8 +95,7 @@ typealias SearchComplete = (Bool) -> Void
           } catch {
             print("JSON Error: \(error)")
         return [] }
-        }
-    
+      }
 }
 
  

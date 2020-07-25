@@ -10,12 +10,12 @@ import UIKit
 
 class SearchViewController: UIViewController, UICollectionViewDelegate {
 
- private let search = NetworkManager.shared
- private let dataSource = SearchDataSource()
+    private let search = NetworkManager.shared
+    private let dataSource = SearchDataSource()
 
     
- @IBOutlet private weak var collectionView: UICollectionView!
- @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +30,11 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
        
         collectionView.dataSource = dataSource
 
-     }
+    }
    
     override func viewWillAppear(_ animated: Bool){
          collectionView.reloadData()
-     }
+    }
     
     // MARK:- Navigation
     
@@ -49,12 +49,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
          let navigationController = UINavigationController(rootViewController: vc)
          navigationController.modalPresentationStyle = .fullScreen
          present(navigationController, animated: true, completion: nil)
-         }
+            }
          PersistenceManager.updateItem(item: searchResult, actionType: .visit) { [weak self] error in
             guard self != nil else { return }
-         }
             }
          }
+    }
       
     // MARK:- Helper Methods
     
@@ -64,60 +64,56 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
       let action = UIAlertAction(title: "OK", style: .default, handler: nil)
       alert.addAction(action)
       present(alert, animated: true, completion: nil)
+      }
     }
-     
-}
 
 extension SearchViewController: UISearchBarDelegate {
       
     func position(for bar: UIBarPositioning) -> UIBarPosition {
      return .topAttached
-     }
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
       
         search.performSearch(for: searchBar.text!, completion: {success in
             
        if !success {
-                  self.showNetworkError()
-                }
-                self.collectionView.reloadData()
-               })
-              
-              collectionView.reloadData()
-              searchBar.resignFirstResponder()
-            }
+          self.showNetworkError()
+       }
+          self.collectionView.reloadData()
+       })
+          collectionView.reloadData()
+          searchBar.resignFirstResponder()
+    }
 }
  
-    extension SearchViewController: CollectionViewDelegate {
+extension SearchViewController: CollectionViewDelegate {
     
     func removeCell(indexPath: IndexPath, result: SearchResult) {
       self.collectionView.performBatchUpdates({
         PersistenceManager.updateItem(item: result, actionType: .delete) { [weak self] error in
             guard let self = self else { return }
             guard let error = error else {
-                let message =  "item deleted successfully!"
-                      let alert = UIAlertController(title: "item deleted", message: message, preferredStyle: .alert)
-                     
+            let message =  "item deleted successfully!"
+            let alert = UIAlertController(title: "item deleted", message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
-                          self.dismiss(animated: true, completion: nil)
-                      }))
+                self.dismiss(animated: true, completion: nil)
+                }))
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     self.present(alert, animated: true)
-                      }
+                }
                 return
             }
-                let message =  error.rawValue
-                      let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
-                     
-                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
-                          self.dismiss(animated: true, completion: nil)
+            let message =  error.rawValue
+            let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
+            self.dismiss(animated: true, completion: nil)
                       }))
-                     self.present(alert, animated: true)
-        }
-        
-        self.collectionView.deleteItems(at:[indexPath])
-         }, completion:nil)
+            self.present(alert, animated: true)
       }
+        
+            self.collectionView.deleteItems(at:[indexPath])
+        }, completion:nil)
     }
+}
 

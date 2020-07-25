@@ -23,14 +23,13 @@ class SearchResultsCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         self.contentView.isUserInteractionEnabled = true
-
     }
     
     override func prepareForReuse() {
-         super.prepareForReuse()
-         downloadTask?.cancel()
-         downloadTask = nil
-       }
+        super.prepareForReuse()
+        downloadTask?.cancel()
+        downloadTask = nil
+    }
        
      // MARK:- Public Methods
     func configure(for result: SearchResult) {
@@ -41,32 +40,31 @@ class SearchResultsCell: UICollectionViewCell {
           artistNameLabel.text = String(format: "%@ (%@)",
                             result.artist, result.type)
         }
-        
         artworkImageView.image = UIImage(named: "Placeholder")
         if let imageURL = URL(string: result.imageL) {
         downloadTask = NetworkManager.shared.loadImage(imageView: artworkImageView, url: imageURL)
         }
          
-             PersistenceManager.retrieveVisitedItems {
-                 [weak self] result in
-                 guard self != nil else { return }
-                 switch result {
-                  case .success(let visitedItems):
-                  self!.visited = visitedItems
-                  case .failure:
-                  return
-                 }
-               }
+        PersistenceManager.retrieveVisitedItems {
+             [weak self] result in
+             guard self != nil else { return }
+             switch result {
+              case .success(let visitedItems):
+              self!.visited = visitedItems
+              case .failure:
+              return
+             }
+        }
         
         if visited.contains(result) {
                        itemLabel.textColor = .lightGray
                        artistNameLabel.textColor = .lightGray
                        artworkImageView.alpha = 0.4
-                   } else {
+        } else {
                        itemLabel.textColor = .black
                        artistNameLabel.textColor = .darkGray
                        artworkImageView.alpha = 1
-                   }
-                 
         }
+                 
     }
+}

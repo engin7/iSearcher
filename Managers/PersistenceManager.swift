@@ -23,8 +23,7 @@ enum PersistenceManager {
     }
 
     static func updateItem(item: SearchResult, actionType: PersistenceActionType, completed: @escaping (SRError?) -> Void) {
-        
-            switch actionType {
+        switch actionType {
             case .delete:
                 retrieveDeletedItems { result in
                switch result {
@@ -61,9 +60,9 @@ enum PersistenceManager {
                     case .failure(let error):
                         completed(error)
                     }
-                }
-           }
+            }
         }
+    }
     
     static func retrieveDeletedItems(completed: @escaping (Result<[SearchResult], SRError>) -> Void) {
         
@@ -72,7 +71,6 @@ enum PersistenceManager {
                 completed(.success([]))
                 return
             }
-            
             // need do/try catch for custom object
             do {
                 let decoder = JSONDecoder()
@@ -94,37 +92,36 @@ enum PersistenceManager {
            } catch {
                return .unableToDelete
            }
-       }
+    }
     
     static func retrieveVisitedItems(completed: @escaping (Result<[SearchResult], SRError>) -> Void) {
            guard let itemsData = defaults.object(forKey: Keys.visitedItems) as? Data else {
                    // if no data found, then need to init w/ empty array
                    completed(.success([]))
                    return
-               }
+           }
                // need do/try catch for custom object
-               do {
-                   let decoder = JSONDecoder()
-                   let visitedItems = try decoder.decode([SearchResult].self, from: itemsData)
-    
-                   completed(.success(visitedItems))
-               } catch {
-                   completed(.failure(.unableToRetrieve))
-               }
-        }
+           do {
+               let decoder = JSONDecoder()
+               let visitedItems = try decoder.decode([SearchResult].self, from: itemsData)
+               completed(.success(visitedItems))
+           } catch {
+               completed(.failure(.unableToRetrieve))
+           }
+    }
     
     static func saveVisitedItems(items: [SearchResult]) -> SRError? {
-            do {
+        do {
                 let encoder = JSONEncoder()
                 let encodedvisitedItems = try encoder.encode(items)
                 
                 defaults.set(encodedvisitedItems, forKey: Keys.visitedItems)
                 return nil
-            } catch {
-                return .unableToDelete
-            }
+        } catch {
+            return .unableToDelete
         }
     }
+}
 
 
  
