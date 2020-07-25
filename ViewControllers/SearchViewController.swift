@@ -13,7 +13,7 @@ class SearchViewController: UIViewController {
 
     struct CollectionView  {
     struct CellIdentifiers {
-      static let searchResultCell = "LandscapeCell"
+      static let searchResultCell = "SearchResultsCell"
       static let loadingCell = "LoadingCell"
     }
   }
@@ -119,13 +119,13 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                       return cell
                       
                     case .noResults:
-                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! LandscapeCell
+                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultsCell
                       cell.itemLabel.text = "Sorry, nothing found"
                       cell.artistNameLabel.text = "Empty"
                       return cell
                       
                     case .results(let list):
-                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! LandscapeCell
+                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultsCell
                        let searchResult = filterDeleted(list: list)[indexPath.row]
                        cell.configure(for: searchResult)
                        return cell
@@ -136,7 +136,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
              performSegue(withIdentifier: "Detail", sender: indexPath)
             visitedLink(index: indexPath)
-            //reload
+            
            }
         }
   

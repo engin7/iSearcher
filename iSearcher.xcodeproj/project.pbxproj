@@ -16,10 +16,10 @@
 		100491DF24B7925800EC5AB3 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491DE24B7925800EC5AB3 /* SearchResult.swift */; };
 		100491E724BA014C00EC5AB3 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */; };
 		100491EB24BA48B600EC5AB3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491EA24BA48B600EC5AB3 /* DetailViewController.swift */; };
-		100491EF24BB312C00EC5AB3 /* LandscapeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491EE24BB312C00EC5AB3 /* LandscapeCell.swift */; };
+		100491EF24BB312C00EC5AB3 /* SearchResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100491EE24BB312C00EC5AB3 /* SearchResultsCell.swift */; };
 		1070935624C79D0F00D0B552 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070935524C79D0F00D0B552 /* PersistenceManager.swift */; };
 		1070935C24CA93D600D0B552 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1070935B24CA93D600D0B552 /* LoadingCell.xib */; };
-		10A5875124BB6EE7001D583A /* LandscapeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A5875024BB6EE7001D583A /* LandscapeCell.xib */; };
+		10A5875124BB6EE7001D583A /* SearchResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A5875024BB6EE7001D583A /* SearchResultsCell.xib */; };
 		10A5875324BB9E8C001D583A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A5875224BB9E8C001D583A /* NetworkManager.swift */; };
 		10A5876224BFB479001D583A /* iSearcherParseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A5876124BFB479001D583A /* iSearcherParseTests.swift */; };
 /* End PBXBuildFile section */
@@ -55,10 +55,10 @@
 		100491DE24B7925800EC5AB3 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		100491E624BA014C00EC5AB3 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		100491EA24BA48B600EC5AB3 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		100491EE24BB312C00EC5AB3 /* LandscapeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeCell.swift; sourceTree = "<group>"; };
+		100491EE24BB312C00EC5AB3 /* SearchResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCell.swift; sourceTree = "<group>"; };
 		1070935524C79D0F00D0B552 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		1070935B24CA93D600D0B552 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
-		10A5875024BB6EE7001D583A /* LandscapeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LandscapeCell.xib; sourceTree = "<group>"; };
+		10A5875024BB6EE7001D583A /* SearchResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultsCell.xib; sourceTree = "<group>"; };
 		10A5875224BB9E8C001D583A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		10A5875F24BFB479001D583A /* iSearcherParseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSearcherParseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10A5876124BFB479001D583A /* iSearcherParseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iSearcherParseTests.swift; sourceTree = "<group>"; };
@@ -164,8 +164,8 @@
 		10A5875524BF692C001D583A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				100491EE24BB312C00EC5AB3 /* LandscapeCell.swift */,
-				10A5875024BB6EE7001D583A /* LandscapeCell.xib */,
+				100491EE24BB312C00EC5AB3 /* SearchResultsCell.swift */,
+				10A5875024BB6EE7001D583A /* SearchResultsCell.xib */,
 				1070935B24CA93D600D0B552 /* LoadingCell.xib */,
 			);
 			path = Cells;
@@ -303,7 +303,7 @@
 			files = (
 				100491C624B652DB00EC5AB3 /* Assets.xcassets in Resources */,
 				1070935C24CA93D600D0B552 /* LoadingCell.xib in Resources */,
-				10A5875124BB6EE7001D583A /* LandscapeCell.xib in Resources */,
+				10A5875124BB6EE7001D583A /* SearchResultsCell.xib in Resources */,
 				100491C424B652D900EC5AB3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +335,7 @@
 				100491DF24B7925800EC5AB3 /* SearchResult.swift in Sources */,
 				100491BF24B652D900EC5AB3 /* SceneDelegate.swift in Sources */,
 				10A5875324BB9E8C001D583A /* NetworkManager.swift in Sources */,
-				100491EF24BB312C00EC5AB3 /* LandscapeCell.swift in Sources */,
+				100491EF24BB312C00EC5AB3 /* SearchResultsCell.swift in Sources */,
 				1070935624C79D0F00D0B552 /* PersistenceManager.swift in Sources */,
 				100491EB24BA48B600EC5AB3 /* DetailViewController.swift in Sources */,
 			);

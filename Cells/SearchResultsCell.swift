@@ -9,7 +9,7 @@
  
 import UIKit
 
-class LandscapeCell: UICollectionViewCell {
+class SearchResultsCell: UICollectionViewCell {
 
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!

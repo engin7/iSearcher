@@ -16,7 +16,7 @@ private let baseURL = "https://itunes.apple.com/search?term=%@&limit=100"
 var state: State = .notSearchedYet
 private var dataTask: URLSessionDataTask? = nil
 
-init() {}
+private init() {}
  
     enum State {
       case notSearchedYet
@@ -59,7 +59,7 @@ typealias SearchComplete = (Bool) -> Void
                  }
                  DispatchQueue.main.async {
                    self.state = newState
-                   completion(success)
+                   completion(success) //Bool
                   }
                })
                dataTask?.resume()
@@ -71,8 +71,8 @@ typealias SearchComplete = (Bool) -> Void
       private func iTunesURL(searchText: String) -> URL {
           let encodedText = searchText.addingPercentEncoding(
             withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-          let urlString = String(format: baseURL, encodedText)
-          let url = URL(string: urlString)
+          let endPoint = String(format: baseURL, encodedText) //term=%@ adds text to %@
+          let url = URL(string: endPoint)
           return url!
         }
          
