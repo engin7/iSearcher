@@ -54,7 +54,6 @@
                     <connections>
                         <outlet property="collectionView" destination="H0v-7j-cJg" id="f7n-AS-ER6"/>
                         <outlet property="searchBar" destination="xPD-KH-Xnc" id="RAd-Ah-iii"/>
-                        <segue destination="Kfg-75-g8g" kind="presentation" identifier="Detail" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="YEt-pm-Qt3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -64,7 +63,7 @@
         <!--Item Detail-->
         <scene sceneID="OsU-8h-Nvi">
             <objects>
-                <viewController id="XWp-MK-k2I" customClass="DetailViewController" customModule="iSearcher" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="XWp-MK-k2I" customClass="DetailViewController" customModule="iSearcher" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eod-go-AHX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

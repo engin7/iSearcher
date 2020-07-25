@@ -39,28 +39,23 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
     // MARK:- Navigation
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-              performSegue(withIdentifier: "Detail", sender: indexPath)
           if case .results(let list) = search.state {
-        PersistenceManager.updateItem(item: dataSource.getFilteredData(list: list)[indexPath.row], actionType: .visit) { [weak self] error in
+          let searchResult = dataSource.getFilteredData(list: list)[indexPath.row]
+          if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
+         {
+         vc.indexPath = indexPath
+         vc.searchResult = searchResult
+         vc.delegateCV = self
+         let navigationController = UINavigationController(rootViewController: vc)
+         navigationController.modalPresentationStyle = .fullScreen
+         present(navigationController, animated: true, completion: nil)
+         }
+         PersistenceManager.updateItem(item: searchResult, actionType: .visit) { [weak self] error in
             guard self != nil else { return }
-        }
+         }
             }
-      }
-        
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      if segue.identifier == "Detail" {
-        if case .results(let list) = search.state {
-        let nav = segue.destination as! UINavigationController
-        let dvc = nav.topViewController as! DetailViewController
-        let indexPath = sender as! IndexPath
-        let searchResult = dataSource.getFilteredData(list: list)[indexPath.row]
-        dvc.indexPath = indexPath
-        dvc.searchResult = searchResult
-        dvc.delegateCV = self
-       }
-      }
-    }
-    
+         }
+      
     // MARK:- Helper Methods
     
     func showNetworkError() {
