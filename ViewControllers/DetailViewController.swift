@@ -21,7 +21,7 @@ class DetailViewController: UIViewController {
     var searchResult: SearchResult!
     var indexPath:IndexPath?
     var downloadTask: URLSessionDownloadTask?
-
+ 
     @IBOutlet weak var artworkImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
@@ -102,7 +102,7 @@ class DetailViewController: UIViewController {
       priceLabel.text = priceText
       // Get image
       if let imageURL = URL(string: searchResult.imageL) {
-        downloadTask = artworkImageView.loadImage(url: imageURL)
+         downloadTask = NetworkManager.shared.loadImage(imageView: artworkImageView, url: imageURL)
       }
     }
     

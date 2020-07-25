@@ -10,7 +10,8 @@
 import UIKit
 
 class SearchResultsCell: UICollectionViewCell {
-
+    
+  
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var artworkImageView: UIImageView!
@@ -41,7 +42,7 @@ class SearchResultsCell: UICollectionViewCell {
         
         artworkImageView.image = UIImage(named: "Placeholder")
         if let imageURL = URL(string: result.imageL) {
-          downloadTask = artworkImageView.loadImage(url: imageURL)
+        downloadTask = NetworkManager.shared.loadImage(imageView: artworkImageView, url: imageURL)
         }
         
         let visitedLinks  = UserDefaults.standard.object(forKey: "visitedLinks") as! [String]?
