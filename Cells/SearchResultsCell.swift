@@ -15,7 +15,9 @@ class SearchResultsCell: UICollectionViewCell {
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var artworkImageView: UIImageView!
-    var downloadTask: URLSessionDownloadTask?
+    private var downloadTask: URLSessionDownloadTask?
+    private var visited: [SearchResult] = []
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,9 +47,19 @@ class SearchResultsCell: UICollectionViewCell {
         downloadTask = NetworkManager.shared.loadImage(imageView: artworkImageView, url: imageURL)
         }
         
-        let visitedLinks  = UserDefaults.standard.object(forKey: "visitedLinks") as! [String]?
-               if visitedLinks != nil {
-               if visitedLinks!.contains(result.storeURL) {
+        
+             PersistenceManager.retrieveVisitedItems {
+                 [weak self] result in
+                 guard self != nil else { return }
+                 switch result {
+                  case .success(let visitedItems):
+                  self!.visited = visitedItems
+                  case .failure:
+                  return
+                 }
+               }
+        
+        if visited.contains(result) {
                        itemLabel.textColor = .lightGray
                        artistNameLabel.textColor = .lightGray
                        artworkImageView.alpha = 0.4
@@ -56,6 +68,6 @@ class SearchResultsCell: UICollectionViewCell {
                        artistNameLabel.textColor = .darkGray
                        artworkImageView.alpha = 1
                    }
-                 }
+                 
         }
     }

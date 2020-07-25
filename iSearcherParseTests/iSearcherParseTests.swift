@@ -47,14 +47,12 @@ class iSearcherParseTests: XCTestCase {
          wait(for: [promise], timeout: 5)
  
     }
-
-    
+ 
     func testDeleted() {
           
            let expectedCount = 95
            let promise = expectation(description: "Status code: 200")
-        
-        
+   
            sut.performSearch(for: "Swift", completion: {success in
                  if success {
                    

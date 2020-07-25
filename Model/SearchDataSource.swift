@@ -10,7 +10,8 @@ import UIKit
 
 class SearchDataSource: NSObject, UICollectionViewDataSource {
      
- 
+    private var filteredItems:[SearchResult] = []
+
       struct CollectionView  {
       struct CellIdentifiers {
         static let searchResultCell = "SearchResultsCell"
@@ -60,21 +61,17 @@ class SearchDataSource: NSObject, UICollectionViewDataSource {
               }
     
     func getFilteredData(list: [SearchResult])-> [SearchResult]  {
-        
-        var filteredItems:[SearchResult] = []
-        
+         
         PersistenceManager.retrieveDeletedItems {
         [weak self] result in
         guard self != nil else { return }
         switch result {
-         case .success(let deletedItems):
-         filteredItems =  list.filter({!deletedItems.contains($0)})
-         case .failure:
-         return
+        case .success(let deletedItems):
+        self!.filteredItems =  list.filter({!deletedItems.contains($0)})
+        case .failure:
+        return
         }
       }
         return filteredItems
     }
-        
-      
 }

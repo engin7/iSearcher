@@ -11,11 +11,11 @@ import UIKit
 class SearchViewController: UIViewController, UICollectionViewDelegate {
 
  private let search = NetworkManager.shared
- let dataSource = SearchDataSource()
+ private let dataSource = SearchDataSource()
 
     
  @IBOutlet private weak var collectionView: UICollectionView!
- @IBOutlet weak var searchBar: UISearchBar!
+ @IBOutlet private weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +40,20 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
               performSegue(withIdentifier: "Detail", sender: indexPath)
-             visitedLink(index: indexPath)
-             
+          if case .results(let list) = search.state {
+        PersistenceManager.updateItem(item: dataSource.getFilteredData(list: list)[indexPath.row], actionType: .visit) { [weak self] error in
+            guard self != nil else { return }
+            guard let error = error else { return}
+            let message =  error.rawValue
+            let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
+                self?.dismiss(animated: true, completion: nil)
+                  }))
+            self?.present(alert, animated: true)
+        }
             }
-         
+      }
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
       if segue.identifier == "Detail" {
         if case .results(let list) = search.state {
@@ -104,7 +114,9 @@ extension SearchViewController: UISearchBarDelegate {
                 alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
                           self.dismiss(animated: true, completion: nil)
                       }))
-                     self.present(alert, animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.present(alert, animated: true)
+                      }
                 return
             }
                 let message =  error.rawValue

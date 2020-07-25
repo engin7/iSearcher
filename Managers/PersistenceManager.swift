@@ -19,7 +19,7 @@ enum PersistenceManager {
 
     enum Keys {
         static let deletedItems = "deletedItems"
-        static let urlVisits = "urlVisits"
+        static let visitedItems = "visitedLinks"
     }
 
     static func updateItem(item: SearchResult, actionType: PersistenceActionType, completed: @escaping (SRError?) -> Void) {
@@ -37,7 +37,7 @@ enum PersistenceManager {
                   deletedItems.append(item)
                    
                    //  saves the new array with the appended results to UserDefaults for persistance
-                   completed(save(items: deletedItems))
+                   completed(saveDeletedItems(items: deletedItems))
                    
                case .failure(let error):
                    completed(error)
@@ -45,9 +45,25 @@ enum PersistenceManager {
            }
         
             case .visit:
-                return
-       }
-    }
+                retrieveVisitedItems { result in
+                    switch result {
+                    case .success(var visitedItems):
+                        
+                       guard !visitedItems.contains(item) else {
+                           completed(.alreadyVisited)
+                           return
+                       }
+                       visitedItems.append(item)
+                        
+                        //  saves the new array with the appended results to UserDefaults for persistance
+                        completed(saveVisitedItems(items: visitedItems))
+                        
+                    case .failure(let error):
+                        completed(error)
+                    }
+                }
+           }
+        }
     
     static func retrieveDeletedItems(completed: @escaping (Result<[SearchResult], SRError>) -> Void) {
         
@@ -66,10 +82,9 @@ enum PersistenceManager {
             } catch {
                 completed(.failure(.unableToRetrieve))
             }
-      
     }
     
-    static func save(items: [SearchResult]) -> SRError? {
+    static func saveDeletedItems(items: [SearchResult]) -> SRError? {
            do {
                let encoder = JSONEncoder()
                let encodedDeletedItems = try encoder.encode(items)
@@ -81,34 +96,35 @@ enum PersistenceManager {
            }
        }
     
+    static func retrieveVisitedItems(completed: @escaping (Result<[SearchResult], SRError>) -> Void) {
+           guard let itemsData = defaults.object(forKey: Keys.visitedItems) as? Data else {
+                   // if no data found, then need to init w/ empty array
+                   completed(.success([]))
+                   return
+               }
+               // need do/try catch for custom object
+               do {
+                   let decoder = JSONDecoder()
+                   let visitedItems = try decoder.decode([SearchResult].self, from: itemsData)
     
-}
-
- var urlVisits: [String] = []
+                   completed(.success(visitedItems))
+               } catch {
+                   completed(.failure(.unableToRetrieve))
+               }
+        }
+    
+    static func saveVisitedItems(items: [SearchResult]) -> SRError? {
+            do {
+                let encoder = JSONEncoder()
+                let encodedvisitedItems = try encoder.encode(items)
+                
+                defaults.set(encodedvisitedItems, forKey: Keys.visitedItems)
+                return nil
+            } catch {
+                return .unableToDelete
+            }
+        }
+    }
 
 
  
-   func visitedLink(index: IndexPath) {
-       
-        let row = index[1]
-        let url:String
-       
-    switch NetworkManager.shared.state {
-          case .notSearchedYet, .loading, .noResults:
-            return
-          case .results(let list):
-            url = list[row].storeURL
-          }
-
-          urlVisits.append(url)
-          
-         let dummy =  UserDefaults.standard.object(forKey: "visitedLinks") as! [String]?
-        
-       if dummy != nil {
-           urlVisits.append(contentsOf: dummy!)
-       }
-         // remove duplicates
-        let unique = Array(Set(urlVisits))
-         UserDefaults.standard.set(unique, forKey: "visitedLinks")
-       }
-   
