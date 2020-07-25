@@ -50,8 +50,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
         let nav = segue.destination as! UINavigationController
         let dvc = nav.topViewController as! DetailViewController
         let indexPath = sender as! IndexPath
-
-        let searchResult = filterDeleted(list: list)[indexPath.row]
+        let searchResult = dataSource.getFilteredData(list: list)[indexPath.row]
         dvc.indexPath = indexPath
         dvc.searchResult = searchResult
         dvc.delegateCV = self
@@ -96,7 +95,27 @@ extension SearchViewController: UISearchBarDelegate {
     
     func removeCell(indexPath: IndexPath, result: SearchResult) {
       self.collectionView.performBatchUpdates({
-        deletedItems.append(result.storeURL)
+        PersistenceManager.updateItem(item: result, actionType: .delete) { [weak self] error in
+            guard let self = self else { return }
+            guard let error = error else {
+                let message =  "item deleted successfully!"
+                      let alert = UIAlertController(title: "item deleted", message: message, preferredStyle: .alert)
+                     
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
+                          self.dismiss(animated: true, completion: nil)
+                      }))
+                     self.present(alert, animated: true)
+                return
+            }
+                let message =  error.rawValue
+                      let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
+                     
+                alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { action in
+                          self.dismiss(animated: true, completion: nil)
+                      }))
+                     self.present(alert, animated: true)
+        }
+        
         self.collectionView.deleteItems(at:[indexPath])
          }, completion:nil)
       }

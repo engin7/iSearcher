@@ -28,9 +28,8 @@ class SearchDataSource: NSObject, UICollectionViewDataSource {
           case .noResults:
             return 1
           case .results(let list):
-             return filterDeleted(list: list).count
-          }
-    
+            return getFilteredData(list: list).count
+           }
         }
     
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -54,12 +53,28 @@ class SearchDataSource: NSObject, UICollectionViewDataSource {
                       
                     case .results(let list):
                       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultsCell
-                       let searchResult = filterDeleted(list: list)[indexPath.row]
-                       cell.configure(for: searchResult)
+                       
+                       cell.configure(for: getFilteredData(list: list)[indexPath.row])
                        return cell
-        
                     }
               }
     
+    func getFilteredData(list: [SearchResult])-> [SearchResult]  {
+        
+        var filteredItems:[SearchResult] = []
+        
+        PersistenceManager.retrieveDeletedItems {
+        [weak self] result in
+        guard self != nil else { return }
+        switch result {
+         case .success(let deletedItems):
+         filteredItems =  list.filter({!deletedItems.contains($0)})
+         case .failure:
+         return
+        }
+      }
+        return filteredItems
+    }
+        
       
 }

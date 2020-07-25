@@ -12,11 +12,11 @@ import XCTest
 
 class iSearcherParseTests: XCTestCase {
 
-    var sut:  NetworkManager.shared! //System Under Test
+    var sut : NetworkManager! //System Under Test
     
     override func setUp() {
         super.setUp()
-        sut = NetworkManager.shared()
+        sut = NetworkManager.shared
     }
 
     override func tearDown() {
@@ -64,7 +64,7 @@ class iSearcherParseTests: XCTestCase {
                case .results(let list):
                   
                 deletedItems  = list.prefix(5).map{ $0.storeURL }
-                self.sut.filterDeleted()
+//                self.sut.filterDeleted()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     let extractedCount = list.count
                     XCTAssertEqual(extractedCount, expectedCount, "Failed to get number of expected search results after deleting 5 items")

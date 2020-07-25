@@ -19,6 +19,7 @@
 		1070935624C79D0F00D0B552 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070935524C79D0F00D0B552 /* PersistenceManager.swift */; };
 		1070935C24CA93D600D0B552 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1070935B24CA93D600D0B552 /* LoadingCell.xib */; };
 		1070935E24CC188700D0B552 /* SearchDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070935D24CC188700D0B552 /* SearchDataSource.swift */; };
+		1070936024CC3DA700D0B552 /* SRError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070935F24CC3DA700D0B552 /* SRError.swift */; };
 		10A5875124BB6EE7001D583A /* SearchResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A5875024BB6EE7001D583A /* SearchResultsCell.xib */; };
 		10A5875324BB9E8C001D583A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A5875224BB9E8C001D583A /* NetworkManager.swift */; };
 		10A5876224BFB479001D583A /* iSearcherParseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A5876124BFB479001D583A /* iSearcherParseTests.swift */; };
@@ -58,6 +59,7 @@
 		1070935524C79D0F00D0B552 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		1070935B24CA93D600D0B552 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		1070935D24CC188700D0B552 /* SearchDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataSource.swift; sourceTree = "<group>"; };
+		1070935F24CC3DA700D0B552 /* SRError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRError.swift; sourceTree = "<group>"; };
 		10A5875024BB6EE7001D583A /* SearchResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultsCell.xib; sourceTree = "<group>"; };
 		10A5875224BB9E8C001D583A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		10A5875F24BFB479001D583A /* iSearcherParseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSearcherParseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +141,7 @@
 			children = (
 				10A5875224BB9E8C001D583A /* NetworkManager.swift */,
 				1070935524C79D0F00D0B552 /* PersistenceManager.swift */,
+				1070935F24CC3DA700D0B552 /* SRError.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				100491C124B652D900EC5AB3 /* SearchViewController.swift in Sources */,
+				1070936024CC3DA700D0B552 /* SRError.swift in Sources */,
 				100491BD24B652D900EC5AB3 /* AppDelegate.swift in Sources */,
 				100491DF24B7925800EC5AB3 /* SearchResult.swift in Sources */,
 				1070935E24CC188700D0B552 /* SearchDataSource.swift in Sources */,

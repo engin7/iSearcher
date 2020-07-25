@@ -49,11 +49,7 @@ typealias SearchComplete = (Bool) -> Void
                   if  searchResults.isEmpty {
                      newState = .noResults
                    } else {
-                      
-                let filteredResults = filterDeleted(list: searchResults)
-                    
-                    newState = .results(filteredResults)
-                      
+                    newState = .results(searchResults)
                    }
                    success = true
                  }
