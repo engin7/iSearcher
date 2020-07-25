@@ -10,9 +10,7 @@ import UIKit
  
  
 protocol CollectionViewDelegate: class {
-   
     func removeCell(indexPath: IndexPath,  result: SearchResult)
-
 }
  
 class DetailViewController: UIViewController {
@@ -50,7 +48,6 @@ class DetailViewController: UIViewController {
 
      @IBAction func backButtonPressed(_ sender: Any) {
          dismiss(animated: true, completion: nil)
-         
      }
       
      @IBAction func deleteItem(_ sender: Any) {

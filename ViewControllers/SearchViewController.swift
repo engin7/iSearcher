@@ -8,37 +8,42 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UICollectionViewDelegate {
 
-
-    struct CollectionView  {
-    struct CellIdentifiers {
-      static let searchResultCell = "SearchResultsCell"
-      static let loadingCell = "LoadingCell"
-    }
-  }
-    
  private let search = NetworkManager.shared
+ let dataSource = SearchDataSource()
+
+    
  @IBOutlet private weak var collectionView: UICollectionView!
  @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // register nib files
-        var cellNib = UINib(nibName: CollectionView.CellIdentifiers.searchResultCell, bundle: nil)
-                collectionView.register(cellNib, forCellWithReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell)
+        var cellNib = UINib(nibName: SearchDataSource.CollectionView.CellIdentifiers.searchResultCell, bundle: nil)
+        collectionView.register(cellNib, forCellWithReuseIdentifier: SearchDataSource.CollectionView.CellIdentifiers.searchResultCell)
               
-        cellNib = UINib(nibName: CollectionView.CellIdentifiers.loadingCell,
+        cellNib = UINib(nibName: SearchDataSource.CollectionView.CellIdentifiers.loadingCell,
                         bundle: nil)
         collectionView.register(cellNib, forCellWithReuseIdentifier:
-                           CollectionView.CellIdentifiers.loadingCell)
-        
+            SearchDataSource.CollectionView.CellIdentifiers.loadingCell)
+       
+        collectionView.dataSource = dataSource
+
      }
    
+    override func viewWillAppear(_ animated: Bool){
+         collectionView.reloadData()
+     }
     
- 
-   
     // MARK:- Navigation
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+              performSegue(withIdentifier: "Detail", sender: indexPath)
+             visitedLink(index: indexPath)
+             
+            }
+         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
       if segue.identifier == "Detail" {
         if case .results(let list) = search.state {
@@ -50,7 +55,7 @@ class SearchViewController: UIViewController {
         dvc.indexPath = indexPath
         dvc.searchResult = searchResult
         dvc.delegateCV = self
-         }
+       }
       }
     }
     
@@ -87,67 +92,13 @@ extension SearchViewController: UISearchBarDelegate {
             }
 }
  
-  
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
-    
-      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-          
-         switch search.state {
-          case .notSearchedYet:
-            return 0
-          case .loading:
-            return 1
-          case .noResults:
-            return 1
-          case .results(let list):
-             return filterDeleted(list: list).count
-          }
-    
-        }
-    
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-              
-              switch search.state {
-                    case .notSearchedYet:
-                      fatalError("Not possible")
-                      
-                    case .loading:
-                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
-                          CollectionView.CellIdentifiers.loadingCell, for: indexPath)
-                      let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-                      spinner.startAnimating()
-                      return cell
-                      
-                    case .noResults:
-                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultsCell
-                      cell.itemLabel.text = "Sorry, nothing found"
-                      cell.artistNameLabel.text = "Empty"
-                      return cell
-                      
-                    case .results(let list):
-                      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultsCell
-                       let searchResult = filterDeleted(list: list)[indexPath.row]
-                       cell.configure(for: searchResult)
-                       return cell
-        
-                    }
-              }
-    
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-             performSegue(withIdentifier: "Detail", sender: indexPath)
-            visitedLink(index: indexPath)
-            
-           }
-        }
-  
     extension SearchViewController: CollectionViewDelegate {
     
-    func removeCell(indexPath: IndexPath, result: SearchResult){
+    func removeCell(indexPath: IndexPath, result: SearchResult) {
       self.collectionView.performBatchUpdates({
         deletedItems.append(result.storeURL)
         self.collectionView.deleteItems(at:[indexPath])
          }, completion:nil)
       }
-     
     }
 
