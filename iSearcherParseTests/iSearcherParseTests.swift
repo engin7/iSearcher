@@ -62,27 +62,25 @@ class iSearcherParseTests: XCTestCase {
                case .notSearchedYet, .loading, .noResults:
                  return
                case .results(let list):
-                  
-                deletedItems  = list.prefix(5).map{ $0.storeURL }
-//                self.sut.filterDeleted()
+                
+                for result in list.prefix(5) {
+                    PersistenceManager.updateItem(item: result, actionType: .delete) { [weak self] error in
+                        guard self != nil else { return }
+                    }}
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     let extractedCount = list.count
                     XCTAssertEqual(extractedCount, expectedCount, "Failed to get number of expected search results after deleting 5 items")
                       }
                 
-                deletedItems = []
-                UserDefaults.standard.set(deletedItems, forKey: "deletedItems")
+                 UserDefaults.standard.set(nil, forKey: "deletedItems")
                 // be aware line above will remove all persistent deleted items
               }
                     promise.fulfill()
 
                   }
               })
-        
-             
-            wait(for: [promise], timeout: 5)
-    
-       }
+                    wait(for: [promise], timeout: 5)
+         }
     
     
     
